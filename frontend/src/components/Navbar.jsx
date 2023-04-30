@@ -61,8 +61,7 @@ export const Navbar = () => {
               <MenuItem
                 borderRadius={"2px"}
                 _hover={{
-                  bg: "#1D2B4F",
-                  color: "white",
+                  bg: "#4DB6AC"
                 }}
                 onClick={() => {
                   toast({
