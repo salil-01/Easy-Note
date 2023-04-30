@@ -15,12 +15,7 @@ app.use("/user", userRouter);
 
 //Home Page
 app.get("/", async (req, res) => {
-  try {
-    let allNotes = await NotesModel.find();
-    res.status(200).send({ msg: allNotes });
-  } catch (error) {
-    res.status(400).send(error);
-  }
+  res.status(200).send("Home Page");
 });
 //protected routes
 app.use(auth);
