@@ -4,7 +4,74 @@ const bcrypt = require("bcrypt");
 const { userModel } = require("../model/User.model");
 
 const userRouter = express.Router();
-
+// Schema Swagger
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      User:
+ *        type: Object
+ *        required:
+ *          -name
+ *          -age
+ *          -pass
+ *          -email
+ *        properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         name:
+ *           type: string
+ *           description: The name of the user
+ *         age:
+ *           type: number
+ *           description: The age of the user
+ *         email:
+ *           type: string
+ *           description: The email of the user
+ *         pass:
+ *           type: string
+ *           description: The password of the user
+ */
+/**
+ * @swagger
+ *  components:
+ *     schemas:
+ *      UserLogin:
+ *        type: Object
+ *        required:
+ *          -email
+ *          -pass
+ *        properties:
+ *          email:
+ *            type: string
+ *            description: Email Of the user
+ *          pass:
+ *            type: string
+ *            description: Password of the user
+ */
+/**
+ * @swagger
+ * tags:
+ *  name: Users
+ *  description: API for User Management
+ */
+/**
+ * @swagger
+ * /user:
+ *   get:
+ *     summary: Lists all the Users
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: The list of the users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
 userRouter.get("/", async (req, res) => {
   try {
     let users = await userModel.find();
@@ -13,6 +80,30 @@ userRouter.get("/", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+/**
+ * @swagger
+ * /user/register:
+ *           post:
+ *              summary : Create a new User
+ *              tags: [Users]
+ *              requestBody:
+ *                required: true
+ *                content:
+ *                  application/json:
+ *                    schema:
+ *                       $ref: '#/components/schemas/User'
+ *              responses:
+ *                200:
+ *                  description: The user was successfully registered
+ *                  content:
+ *                    application/json:
+ *                      schema:
+ *                         $ref: '#/components/schemas/User'
+ *                500:
+ *                  description : Some Server Error
+ */
+
 userRouter.post("/register", async (req, res) => {
   //logic
   const { email, pass, age, name } = req.body;
@@ -33,6 +124,28 @@ userRouter.post("/register", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /user/login:
+ *           post:
+ *              summary : Login a User
+ *              tags: [Users]
+ *              requestBody:
+ *                required: true
+ *                content:
+ *                  application/json:
+ *                    schema:
+ *                       $ref: '#/components/schemas/UserLogin'
+ *              responses:
+ *                200:
+ *                  description: Login Successfull
+ *                  content:
+ *                    application/json:
+ *                      schema:
+ *                         $ref: '#/components/schemas/UserLogin'
+ *                500:
+ *                  description : Some Server Error
+ */
 userRouter.post("/login", async (req, res) => {
   //logic
   const { email, pass } = req.body;

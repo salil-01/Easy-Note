@@ -2,6 +2,61 @@ const express = require("express");
 const { NotesModel } = require("../model/Notes.model");
 const notesRouter = express.Router();
 
+// Schema Swagger
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Note:
+ *        type: Object
+ *        required:
+ *          -title
+ *          -body
+ *          -description
+ *        properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the user
+ *         title:
+ *           type: string
+ *           description: The title of the user
+ *         body:
+ *           type: string
+ *           description: The body of the user
+ *         description:
+ *           type: string
+ *           description: The description of the user
+ *         authorID:
+ *           type: string
+ *           description: Id of Author
+ *         author:
+ *           type: string
+ *           description: Name of the Author
+ */
+
+/**
+ * @swagger
+ * tags:
+ *  name: Notes
+ *  description: API for Notes Management
+ */
+
+/**
+ * @swagger
+ * /notes:
+ *   get:
+ *     summary: Lists all the Notes of a User
+ *     tags: [Notes]
+ *     responses:
+ *       200:
+ *         description: The list of the all the notes of user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Note'
+ */
 //to get all the notes of user
 notesRouter.get("/", async (req, res) => {
   let { authorID } = req.body;
@@ -17,6 +72,30 @@ notesRouter.get("/", async (req, res) => {
     res.status(200).send({ msg: "Please login to access your notes" });
   }
 });
+
+/**
+ * @swagger
+ * /notes/{id}:
+ *   get:
+ *     summary: Get the note by id
+ *     tags: [Notes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The Note id
+ *     responses:
+ *       200:
+ *         description: The note response by id
+ *         contens:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Note'
+ *       400:
+ *         description: The Note was not found
+ */
 // to get a single note
 notesRouter.get("/:id", async (req, res) => {
   const { authorID } = req.body;
@@ -42,6 +121,41 @@ notesRouter.post("/create", async (req, res) => {
     res.status(400).send({ error: error.message });
   }
 });
+/**
+ * @swagger
+ * /notes/edit/{id}:
+ *   patch:
+ *    summary: Update the Note by the id
+ *    tags: [Notes]
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: The note id
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Note'
+ *    responses:
+ *      200:
+ *        description: The note was updated
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Note'
+ *      404:
+ *        description: The note was not found
+ *      500:
+ *        description: Some error happened
+ */
+
+
+
+
 notesRouter.patch("/edit/:noteID", async (req, res) => {
   const { noteID } = req.params;
   const note = await NotesModel.findOne({ _id: noteID });
