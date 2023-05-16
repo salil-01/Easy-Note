@@ -1,9 +1,13 @@
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
   Heading,
   HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
   SimpleGrid,
   Spinner,
   Text,
@@ -11,6 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useRef } from "react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { NotesCard } from "../components/NotesCard";
@@ -41,6 +46,12 @@ export const Notes = () => {
   const { token } = useContext(AuthContext);
   const toast = useToast();
   const navigate = useNavigate();
+  const inputRef = useRef(null);
+
+   /* -------  Search a Single Note------ */
+const handleSearch = ()=>{
+  console.log(inputRef.current.value);
+}
 
   /* -------  Delete Single Note------ */
   const handleDelete = async (id) => {
@@ -99,6 +110,7 @@ export const Notes = () => {
   };
   /* ------- Get Users ------ */
   useEffect(() => {
+    inputRef.current.focus();
     if (notesData.length === 0) {
       getData(`${process.env.REACT_APP_BACKEND_URL}/notes`);
     }
@@ -107,15 +119,31 @@ export const Notes = () => {
     <Box bg={"#DDFFE7"}>
       <Box
         width={{
-          sm: "20%",
-          md: "20%",
-          lg: "15%",
+          sm: "50%",
+          md: "50%",
+          lg: "30%",
         }}
         margin={"auto"}
         padding={"20px"}
       >
         <HStack justifyContent={"space-between"} alignItems={"center"}>
-          <Heading as={"h1"}>Notes </Heading>
+          <InputGroup>
+            <Input
+              ref={inputRef}
+              placeholder="Search your notes"
+              border={"1px dotted gray"}
+            />
+            <InputRightElement>
+              <IconButton
+                icon={<Search2Icon />}
+                aria-label="Search-Notes"
+                size={"sm"}
+                variant={"ghost"}
+                onClick={handleSearch}
+              />
+            </InputRightElement>
+          </InputGroup>
+
           <Tooltip hasArrow label="Create a Note" fontSize="md">
             <Button
               onClick={() => navigate(`/create`)}
