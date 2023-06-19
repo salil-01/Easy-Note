@@ -81,8 +81,8 @@ export const Login = () => {
           duration: 2000,
           isClosable: true,
         });
+        // navigate("/");
       }
-      navigate("/");
     } catch (error) {
       console.log(error);
       setLoading(false);
