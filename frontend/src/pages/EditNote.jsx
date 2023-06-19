@@ -48,16 +48,16 @@ export const EditNote = () => {
     e.preventDefault();
     // console.log(data);
     setEditLoading(true);
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   "Content-Type": "application/json",
+    //   Authorization: `Bearer ${token}`,
+    // };
     try {
       await axios.patch(
         `${process.env.REACT_APP_BACKEND_URL}/notes/edit/${id}`,
         data,
         {
-          headers: headers,
+          withCredentials: true,
         }
       );
       // console.log(res);
@@ -85,15 +85,15 @@ export const EditNote = () => {
   };
   const getSingleNote = async (id) => {
     setLoading(true);
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   "Content-Type": "application/json",
+    //   Authorization: `Bearer ${token}`,
+    // };
     try {
       let resObj = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/notes/${id}`,
         {
-          headers: headers,
+          withCredentials: true,
         }
       );
       // console.log(resObj);

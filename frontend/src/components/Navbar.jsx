@@ -22,7 +22,7 @@ export const Navbar = () => {
     textDecoration: "underline",
     fontWeight: "500",
   };
-  const { logout, name, token, auth } = useContext(AuthContext);
+  const { logout, name, auth } = useContext(AuthContext);
   //   console.log(name);
   return (
     <Flex
@@ -51,7 +51,7 @@ export const Navbar = () => {
       >
         <Text fontSize={"1.3rem"}>Sign Up</Text>
       </NavLink>
-      {token && auth ? (
+      {auth ? (
         <Flex>
           <Menu>
             <MenuButton isOpen={isOpen}>
@@ -61,7 +61,7 @@ export const Navbar = () => {
               <MenuItem
                 borderRadius={"2px"}
                 _hover={{
-                  bg: "#4DB6AC"
+                  bg: "#4DB6AC",
                 }}
                 onClick={() => {
                   toast({

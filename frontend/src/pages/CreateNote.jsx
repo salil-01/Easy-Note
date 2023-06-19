@@ -43,12 +43,7 @@ export const CreateNote = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (data.title && data.body && data.category) {
-      //   console.log(data);
       setEditLoading(true);
-      // const headers = {
-      //   "Content-Type": "application/json",
-      //   Authorization: `Bearer ${token}`,
-      // };
       try {
         await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/notes/create`,
@@ -93,7 +88,6 @@ export const CreateNote = () => {
   };
   return (
     <>
-      create page
       <Box
         padding={10}
         margin={"30px auto"}

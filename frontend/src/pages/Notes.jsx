@@ -43,14 +43,12 @@ const deleteNote = async (id) => {
 export const Notes = () => {
   const [notesData, setNotesData] = useState([] || arr);
   const [loading, setLoading] = useState(false);
-  const { token } = useContext(AuthContext);
   const toast = useToast();
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
   /* -------  Search a Single Note------ */
   const handleSearch = (query) => {
-    // console.log(query);
     getData(`${process.env.REACT_APP_BACKEND_URL}/notes`, query);
   };
 
@@ -65,11 +63,7 @@ export const Notes = () => {
   const handleDelete = async (id) => {
     // console.log(id);
     setLoading(true);
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    deleteNote(id)
+    await deleteNote(id)
       .then(() => {
         getData(`${process.env.REACT_APP_BACKEND_URL}/notes`);
         toast({
@@ -101,10 +95,6 @@ export const Notes = () => {
   const getData = async (url, val) => {
     const parameter = val ? { title: val } : null;
     setLoading(true);
-    // const headers = {
-    //   "Content-Type": "application/json",
-    //   Authorization: `Bearer ${token}`,
-    // };
     try {
       let res = await axios.get(url, {
         withCredentials: true,
