@@ -45,7 +45,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
-    setLoading(true);
+    // setLoading(true);
     try {
       let response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/login`,
@@ -54,34 +54,34 @@ export const Login = () => {
           withCredentials: true,
         }
       );
-      // console.log(response.data);
-      // setLoading(false);
-      // if (response.data.token && response.data.user) {
-      //   setLoading(false);
-      //   login(response.data.token, response.data.user);
-      //   // setFormData(initial);
-      //   toast({
-      //     title: "Login Successfull",
-      //     description: `Welcome ${response.data.user} 🤖`,
-      //     position: "top",
-      //     status: "success",
-      //     variant: "top-accent",
-      //     duration: 2000,
-      //     isClosable: true,
-      //   });
-      //   navigate("/notes");
-      // } else {
-      //   setLoading(false);
-      //   toast({
-      //     title: "Invalid Credentials",
-      //     position: "top",
-      //     status: "error",
-      //     variant: "top-accent",
-      //     duration: 2000,
-      //     isClosable: true,
-      //   });
-      // }
-      //   navigate("/");
+      console.log(response.data);
+      setLoading(false);
+      if (response.data.user) {
+        setLoading(false);
+        login(response.data.user);
+        // setFormData(initial);
+        toast({
+          title: "Login Successfull",
+          description: `Welcome ${response.data.user} 🤖`,
+          position: "top",
+          status: "success",
+          variant: "top-accent",
+          duration: 2000,
+          isClosable: true,
+        });
+        navigate("/notes");
+      } else {
+        setLoading(false);
+        toast({
+          title: "Invalid Credentials",
+          position: "top",
+          status: "error",
+          variant: "top-accent",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+      navigate("/");
     } catch (error) {
       console.log(error);
       setLoading(false);

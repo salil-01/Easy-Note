@@ -101,13 +101,13 @@ export const Notes = () => {
   const getData = async (url, val) => {
     const parameter = val ? { title: val } : null;
     setLoading(true);
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
+    // const headers = {
+    //   "Content-Type": "application/json",
+    //   Authorization: `Bearer ${token}`,
+    // };
     try {
       let res = await axios.get(url, {
-        headers: headers,
+        withCredentials: true,
         params: parameter,
       });
       // console.log(res.data);

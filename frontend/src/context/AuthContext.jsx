@@ -13,9 +13,9 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState("" || getData("token"));
   const [auth, setAuth] = useState(false || getData("auth"));
   const [name, setName] = useState("" || getData("username"));
-  const login = (token, username) => {
+  const login = (username) => {
     setName(username);
-    setToken(token);
+    // setToken(token);
     setAuth(true);
   };
   const logout = () => {
