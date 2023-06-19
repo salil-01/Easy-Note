@@ -171,14 +171,14 @@ userRouter.post("/login", async (req, res) => {
             .status(200)
             .send({ msg: "Login Successfull", token, user: user.name });
         } else {
-          res.status(200).send({
+          res.status(400).send({
             err: err,
             msg: "Invalid Credentials",
           });
         }
       });
     } else {
-      res.status(200).send({ msg: "User Does Not Exist" });
+      res.status(400).send({ msg: "User Does Not Exist" });
     }
   } catch (error) {
     res.status(400).send({ error: error.message });

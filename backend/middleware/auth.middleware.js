@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
       }
     });
   } else {
-    res.status(200).send("Please Login to access");
+    res.status(400).send("Please Login to access");
   }
 };
 module.exports = { auth };

@@ -61,9 +61,13 @@ const notesRouter = express.Router();
 notesRouter.get("/", async (req, res) => {
   let { authorID } = req.body;
   //   console.log(authorID);
+  let { title } = req.query;
+  let obj = {};
+  title ? (obj.title = { $regex: title, $options: "i" }) : null;
   if (authorID) {
+    obj.authorID = authorID;
     try {
-      let notes = await NotesModel.find({ authorID });
+      let notes = await NotesModel.find(obj);
       res.status(200).send({ msg: notes });
     } catch (error) {
       res.status(400).send({ error: error.message });
@@ -152,9 +156,6 @@ notesRouter.post("/create", async (req, res) => {
  *      500:
  *        description: Some error happened
  */
-
-
-
 
 notesRouter.patch("/edit/:noteID", async (req, res) => {
   const { noteID } = req.params;
