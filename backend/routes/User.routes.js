@@ -170,8 +170,9 @@ userRouter.post("/login", async (req, res) => {
           res.cookie("token", token, {
             httpOnly: true,
             secure: false,
+            domain: "easynotes-app.netlify.app",
             maxAge: 3600000,
-            sameSite: "lax",
+            sameSite: "none",
           });
           res.status(200).send({ msg: "Login Successfull", user: user.name });
         } else {
