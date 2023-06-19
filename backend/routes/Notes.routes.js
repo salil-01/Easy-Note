@@ -63,7 +63,7 @@ notesRouter.get("/", async (req, res) => {
   let { title } = req.query;
   let obj = {};
   title ? (obj.title = { $regex: title, $options: "i" }) : null;
-  
+
   if (authorID) {
     obj.authorID = authorID;
     try {
@@ -180,7 +180,7 @@ notesRouter.delete("/delete/:noteID", async (req, res) => {
   const { noteID } = req.params;
   const note = await NotesModel.findOne({ _id: noteID });
   const data = req.body;
-  console.log(noteID);
+  //
   try {
     if (note.authorID === data.authorID) {
       await NotesModel.findOneAndDelete({ _id: noteID });

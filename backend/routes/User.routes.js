@@ -173,11 +173,6 @@ userRouter.post("/login", async (req, res) => {
             maxAge: 3600000,
             sameSite: "lax",
           });
-          // res.cookie("user", user.name, {
-          //   httpOnly: true,
-          //   secure: true,
-          //   maxAge: 3600000,
-          // });
           res.status(200).send({ msg: "Login Successfull", user: user.name });
         } else {
           res.status(401).send({
