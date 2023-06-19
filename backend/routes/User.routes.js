@@ -167,18 +167,26 @@ userRouter.post("/login", async (req, res) => {
             },
             process.env.secretKey
           );
-          res
-            .status(200)
-            .send({ msg: "Login Successfull", token, user: user.name });
+          res.cookie("token", token, {
+            httpOnly: false,
+            secure: true,
+            maxAge: 3600000,
+          });
+          res.cookie("user", user.name, {
+            httpOnly: true,
+            secure: true,
+            maxAge: 3600000,
+          });
+          res.status(200).send({ msg: "Login Successfull" });
         } else {
-          res.status(200).send({
+          res.status(401).send({
             err: err,
             msg: "Invalid Credentials",
           });
         }
       });
     } else {
-      res.status(200).send({ msg: "User Does Not Exist" });
+      res.status(404).send({ msg: "User Does Not Exist" });
     }
   } catch (error) {
     res.status(400).send({ error: error.message });

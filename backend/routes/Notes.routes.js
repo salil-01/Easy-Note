@@ -60,10 +60,14 @@ const notesRouter = express.Router();
 //to get all the notes of user
 notesRouter.get("/", async (req, res) => {
   let { authorID } = req.body;
-  //   console.log(authorID);
+  let { title } = req.query;
+  let obj = {};
+  title ? (obj.title = { $regex: title, $options: "i" }) : null;
+  
   if (authorID) {
+    obj.authorID = authorID;
     try {
-      let notes = await NotesModel.find({ authorID });
+      let notes = await NotesModel.find(obj);
       res.status(200).send({ msg: notes });
     } catch (error) {
       res.status(400).send({ error: error.message });
@@ -100,7 +104,7 @@ notesRouter.get("/", async (req, res) => {
 notesRouter.get("/:id", async (req, res) => {
   const { authorID } = req.body;
   const { id } = req.params;
-  // console.log(id);
+  console.log(id);
   if (authorID) {
     try {
       let note = await NotesModel.find({ authorID: authorID, _id: id });
@@ -153,9 +157,6 @@ notesRouter.post("/create", async (req, res) => {
  *        description: Some error happened
  */
 
-
-
-
 notesRouter.patch("/edit/:noteID", async (req, res) => {
   const { noteID } = req.params;
   const note = await NotesModel.findOne({ _id: noteID });
@@ -179,7 +180,7 @@ notesRouter.delete("/delete/:noteID", async (req, res) => {
   const { noteID } = req.params;
   const note = await NotesModel.findOne({ _id: noteID });
   const data = req.body;
-  // console.log(noteID);
+  console.log(noteID);
   try {
     if (note.authorID === data.authorID) {
       await NotesModel.findOneAndDelete({ _id: noteID });

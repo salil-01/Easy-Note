@@ -49,34 +49,38 @@ export const Login = () => {
     try {
       let response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/login`,
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
-      // console.log(response.data.token);
-      if (response.data.token && response.data.user) {
-        setLoading(false);
-        login(response.data.token, response.data.user);
-        setFormData(initial);
-        toast({
-          title: "Login Successfull",
-          description: `Welcome ${response.data.user} 🤖`,
-          position: "top",
-          status: "success",
-          variant: "top-accent",
-          duration: 2000,
-          isClosable: true,
-        });
-        navigate("/notes");
-      } else {
-        setLoading(false);
-        toast({
-          title: "Invalid Credentials",
-          position: "top",
-          status: "error",
-          variant: "top-accent",
-          duration: 2000,
-          isClosable: true,
-        });
-      }
+      // console.log(response.data);
+      // setLoading(false);
+      // if (response.data.token && response.data.user) {
+      //   setLoading(false);
+      //   login(response.data.token, response.data.user);
+      //   // setFormData(initial);
+      //   toast({
+      //     title: "Login Successfull",
+      //     description: `Welcome ${response.data.user} 🤖`,
+      //     position: "top",
+      //     status: "success",
+      //     variant: "top-accent",
+      //     duration: 2000,
+      //     isClosable: true,
+      //   });
+      //   navigate("/notes");
+      // } else {
+      //   setLoading(false);
+      //   toast({
+      //     title: "Invalid Credentials",
+      //     position: "top",
+      //     status: "error",
+      //     variant: "top-accent",
+      //     duration: 2000,
+      //     isClosable: true,
+      //   });
+      // }
       //   navigate("/");
     } catch (error) {
       console.log(error);
