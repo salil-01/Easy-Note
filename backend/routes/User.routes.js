@@ -168,16 +168,16 @@ userRouter.post("/login", async (req, res) => {
             process.env.secretKey
           );
           res.cookie("token", token, {
-            httpOnly: false,
-            secure: true,
-            maxAge: 3600000,
-          });
-          res.cookie("user", user.name, {
             httpOnly: true,
             secure: true,
             maxAge: 3600000,
           });
-          res.status(200).send({ msg: "Login Successfull" });
+          // res.cookie("user", user.name, {
+          //   httpOnly: true,
+          //   secure: true,
+          //   maxAge: 3600000,
+          // });
+          res.status(200).send({ msg: "Login Successfull", user: user.name });
         } else {
           res.status(401).send({
             err: err,
