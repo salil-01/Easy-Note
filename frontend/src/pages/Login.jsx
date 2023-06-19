@@ -46,7 +46,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(formData);
-    // setLoading(true);
+    setLoading(true);
     try {
       let response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/user/login`,
