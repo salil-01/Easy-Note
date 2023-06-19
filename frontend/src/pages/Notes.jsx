@@ -31,12 +31,12 @@ const arr = [
   },
 ];
 
-const deleteNote = async (id, headers) => {
+const deleteNote = async (id) => {
   // console.log(id)
   return await axios.delete(
     `${process.env.REACT_APP_BACKEND_URL}/notes/delete/${id}`,
     {
-      headers,
+      withCredentials: true,
     }
   );
 };
@@ -69,7 +69,7 @@ export const Notes = () => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    deleteNote(id, headers)
+    deleteNote(id)
       .then(() => {
         getData(`${process.env.REACT_APP_BACKEND_URL}/notes`);
         toast({

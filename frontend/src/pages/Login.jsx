@@ -28,6 +28,7 @@ export const Login = () => {
   const [formData, setFormData] = useState(initial);
   let [loading, setLoading] = useState(false);
   const location = useLocation();
+  console.log("ok", document.cookie);
   // console.log(location.state)
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);

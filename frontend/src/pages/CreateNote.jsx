@@ -45,16 +45,16 @@ export const CreateNote = () => {
     if (data.title && data.body && data.category) {
       //   console.log(data);
       setEditLoading(true);
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
+      // const headers = {
+      //   "Content-Type": "application/json",
+      //   Authorization: `Bearer ${token}`,
+      // };
       try {
         await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/notes/create`,
           data,
           {
-            headers: headers,
+            withCredentials: true,
           }
         );
         // console.log(res);

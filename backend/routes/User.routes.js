@@ -169,8 +169,9 @@ userRouter.post("/login", async (req, res) => {
           );
           res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
+            secure: false,
             maxAge: 3600000,
+            sameSite: "lax",
           });
           // res.cookie("user", user.name, {
           //   httpOnly: true,
