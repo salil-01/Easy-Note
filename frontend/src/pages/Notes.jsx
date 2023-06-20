@@ -48,11 +48,18 @@ export const Notes = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-   /* -------  Search a Single Note------ */
-const handleSearch = ()=>{
-  console.log(inputRef.current.value);
-}
+  /* -------  Search a Single Note------ */
+  const handleSearch = (query) => {
+    getData(`${process.env.REACT_APP_BACKEND_URL}/notes`, query);
+  };
 
+  /* ------- Key Event ------ */
+  const handleKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      // console.log(inputRef.current.value);
+      handleSearch(inputRef.current.value);
+    }
+  };
   /* -------  Delete Single Note------ */
   const handleDelete = async (id) => {
     // console.log(id);
@@ -61,7 +68,7 @@ const handleSearch = ()=>{
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    deleteNote(id, headers)
+    await deleteNote(id, headers)
       .then(() => {
         getData(`${process.env.REACT_APP_BACKEND_URL}/notes`);
         toast({
@@ -90,7 +97,8 @@ const handleSearch = ()=>{
   };
 
   /* -------Get Data of All Notes ------ */
-  const getData = async (url) => {
+  const getData = async (url, val) => {
+    const parameter = val ? { title: val } : null;
     setLoading(true);
     const headers = {
       "Content-Type": "application/json",
@@ -99,6 +107,7 @@ const handleSearch = ()=>{
     try {
       let res = await axios.get(url, {
         headers: headers,
+        params: parameter,
       });
       // console.log(res.data);
       setNotesData(res.data.msg);
@@ -132,6 +141,7 @@ const handleSearch = ()=>{
               ref={inputRef}
               placeholder="Search your notes"
               border={"1px dotted gray"}
+              onKeyDown={handleKeyPress}
             />
             <InputRightElement>
               <IconButton
@@ -139,7 +149,7 @@ const handleSearch = ()=>{
                 aria-label="Search-Notes"
                 size={"sm"}
                 variant={"ghost"}
-                onClick={handleSearch}
+                onClick={() => handleSearch(inputRef.current.value)}
               />
             </InputRightElement>
           </InputGroup>
