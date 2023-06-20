@@ -51,7 +51,7 @@ export const Login = () => {
         `${process.env.REACT_APP_BACKEND_URL}/user/login`,
         formData
       );
-      // console.log(response.data.token);
+      console.log(response.data.token);
       if (response.data.token && response.data.user) {
         setLoading(false);
         login(response.data.token, response.data.user);
@@ -82,7 +82,7 @@ export const Login = () => {
       console.log(error);
       setLoading(false);
       toast({
-        title: "Server Error",
+        title: "Invalid Credentials",
         position: "top-right",
         status: "error",
         variant: "top-accent",
